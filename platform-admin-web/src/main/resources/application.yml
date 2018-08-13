@@ -1,0 +1,9 @@
+spring:
+  thymeleaf:
+    mode:
+      LEGACYHTML5
+    check-template:
+      false
+    cache: false
+server:
+  port: 8888

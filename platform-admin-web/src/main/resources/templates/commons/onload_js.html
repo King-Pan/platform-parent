@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="onloadJS">
+    <!--jquery begin-->
+    <script src="webjars/vue/2.5.13/dist/vue.min.js" th:src="@{/webjars/vue/2.5.13/dist/vue.min.js}"></script>
+    <script src="webjars/" th:src="@{/webjars/jquery/3.3.1/dist/jquery.min.js}"
+            type="text/javascript"></script>
+
+
+    <!--公共js begin-->
+    <script th:src="@{/js/common.js}" src="js/common.js"></script>
+    <!--公共js end-->
+</div>
+</body>
+</html>
