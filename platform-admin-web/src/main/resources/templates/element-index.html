@@ -29,7 +29,7 @@
             background-color: #E9EEF3;
             color: #333;
             text-align: center;
-            height: 550px;
+            min-height: 600px;
         }
 
         body > .el-container {
@@ -53,6 +53,23 @@
         .footer {
             text-align: center;
             line-height: 60px;
+        }
+
+        .text {
+            font-size: 14px;
+        }
+
+        .item {
+            margin-bottom: 18px;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+        .clearfix:after {
+            clear: both
         }
     </style>
 </head>
@@ -131,6 +148,44 @@
                 </el-row>
             </el-header>
             <el-main>
+                <el-row>
+                    <el-col :span="24"><div class="grid-content">数据展示</div></el-col>
+                </el-row>
+                <el-row :gutter="20">
+                    <el-col :span="8">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>卡片名称</span>
+                                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                            </div>
+                            <div v-for="o in 4" :key="o" class="text item">
+                                {{'列表内容 ' + o }}
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>卡片名称</span>
+                                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                            </div>
+                            <div v-for="o in 4" :key="o" class="text item">
+                                {{'列表内容 ' + o }}
+                            </div>
+                        </el-card>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-card class="box-card">
+                            <div slot="header" class="clearfix">
+                                <span>卡片名称</span>
+                                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+                            </div>
+                            <div v-for="o in 4" :key="o" class="text item">
+                                {{'列表内容 ' + o }}
+                            </div>
+                        </el-card>
+                    </el-col>
+                </el-row>
                 <el-table :data="tableData3" style="width: 100%" size="small">
                     <el-table-column prop="date" label="日期" width="180">
                     </el-table-column>
