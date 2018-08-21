@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/webjars/element-ui/2.4.5/lib/theme-chalk/index.css}"
           href="webjars/element-ui/2.4.5/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_792188_slhk3ya6rje.css">
     <style>
         .el-header,
         .el-footer {
@@ -18,13 +19,6 @@
             color: #ffd0aa;
         }
 
-        .el-aside {
-            background-color: #545c64;
-            color: #333;
-            text-align: center;
-            line-height: 200px;
-        }
-
         .el-main {
             background-color: #E9EEF3;
             color: #333;
@@ -36,12 +30,12 @@
             margin-bottom: 40px;
         }
 
-        .el-container:nth-child(5) .el-aside,
-        .el-container:nth-child(6) .el-aside {
+        .el-container:nth-child(5),
+        .el-container:nth-child(6) {
             line-height: 260px;
         }
 
-        .el-container:nth-child(7) .el-aside {
+        .el-container:nth-child(7) {
             line-height: 320px;
         }
 
@@ -68,6 +62,7 @@
             display: table;
             content: "";
         }
+
         .clearfix:after {
             clear: both
         }
@@ -76,78 +71,22 @@
 <body>
 <div id="app">
     <el-container>
-
-        <el-menu default-active="1-4-1" style="border-right:0px" class="el-menu-vertical-demo"
-                 background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" @open="handleOpen"
-                 @close="handleClose" :collapse="isCollapse">
-            <el-submenu index="1">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span slot="title">导航一</span>
-                </template>
-                <el-menu-item-group>
-                    <span slot="title">分组一</span>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                    <span slot="title">选项4</span>
-                    <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
-            </el-menu-item>
-            <el-menu-item index="3" disabled>
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-            </el-menu-item>
-        </el-menu>
+        <el-scrollbar wrapClass="scrollbar-wrapper">
+            <div th:replace="commons/left_menu :: leftMenu"></div>
+        </el-scrollbar>
         <el-container>
-            <el-header>
-                <el-row>
-                    <el-col :span="4">
-                        <div class="grid-content bg-purple" style="float: left;">
-                            <el-button type="primary" icon="el-icon-menu" @click="switchAside">切换</el-button>
-                        </div>
-                    </el-col>
-                    <el-col :span="16">
-                        <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal"
-                                 @select="handleSelect" background-color="#545c64" text-color="#fff"
-                                 active-text-color="#ffd04b">
-                            <el-menu-item index="1">处理中心</el-menu-item>
-                            <el-submenu index="2">
-                                <template slot="title">我的工作台</template>
-                                <el-menu-item index="2-1">选项1</el-menu-item>
-                                <el-menu-item index="2-2">选项2</el-menu-item>
-                                <el-menu-item index="2-3">选项3</el-menu-item>
-                                <el-submenu index="2-4">
-                                    <template slot="title">选项4</template>
-                                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                                </el-submenu>
-                            </el-submenu>
-                            <el-menu-item index="3" disabled>消息中心</el-menu-item>
-                            <el-menu-item index="4">
-                                <a href="https://www.ele.me" target="_blank">订单管理</a>
-                            </el-menu-item>
-                        </el-menu>
-                    </el-col>
-                    <el-col :span="4">
-                        <div class="grid-content bg-purple-light"></div>
-                    </el-col>
-                </el-row>
-            </el-header>
+            <div th:replace="commons/header :: header"></div>
             <el-main>
+                <el-tabs v-model="editableTabsValue" stretch="false" type="card" editable @edit="handleTabsEdit">
+                    <el-tab-pane
+                            :key="item.name"
+                            v-for="(item, index) in editableTabs"
+                            :label="item.title"
+                            :name="item.name"
+                    >
+                        {{item.content}}
+                    </el-tab-pane>
+                </el-tabs>
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-card class="box-card">
@@ -183,14 +122,7 @@
                         </el-card>
                     </el-col>
                 </el-row>
-                <el-table :data="tableData3" style="width: 100%" size="small">
-                    <el-table-column prop="date" label="日期" width="180">
-                    </el-table-column>
-                    <el-table-column prop="name" label="姓名" width="180">
-                    </el-table-column>
-                    <el-table-column prop="address" label="地址">
-                    </el-table-column>
-                </el-table>
+
                 <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>
 
                 <el-dialog title="提示" :visible.sync="dialogVisible" center fullscreen :before-close="handleClose">
@@ -211,14 +143,10 @@
                     </div>
                 </el-dialog>
 
+                <i class="fontFamily el-icon-ump-user_delete" style="font-size: 20px">ssss</i>
+
             </el-main>
-            <el-footer>
-                <div class="block">
-                    <span class="demonstration">Copyright &copy;2015-2018 xx快速开发系统 v1.0 All Rights Reserved.</span>
-                    <span>本系统由<a href="http://www.javalearn.club/" target="_blank"
-                                 title="java学习网">java学习网</a>提供前端技术支持</span>
-                </div>
-            </el-footer>
+            <div th:replace="commons/footer :: footer"></div>
         </el-container>
     </el-container>
 </div>
@@ -231,6 +159,30 @@
         el: '#app',
         data: function () {
             return {
+                visible: true,
+                top: 0,
+                left: 0,
+                selectedTag: {},
+                editableTabsValue: '2',
+                editableTabs: [{
+                    title: 'Tab 1',
+                    name: '1',
+                    content: 'Tab 1 content'
+                }, {
+                    title: 'Tab 2',
+                    name: '2',
+                    content: 'Tab 2 content'
+                }],
+                tabIndex: 2,
+                menuList: [
+                    {title: '首页', icon: 'iconfont el-icon-i-home', leaf: true},
+                    {
+                        title: '系统设置', icon: 'iconfont el-icon-i-setting', leaf: false, childrenList: [
+                            {title: '首页2', icon: 'iconfont el-icon-i-home', leaf: true},
+                            {title: '首页3', icon: 'iconfont el-icon-i-home', leaf: true}
+                        ]
+                    }
+                ],
                 visible: false,
                 isCollapse: false,
                 activeIndex: '1',
@@ -306,6 +258,27 @@
             },
             handleClose: function (done) {
                 this.dialogVisible = false;
+            },
+            handleTabsEdit: function (targetName, action) {
+                if (action === 'add') {
+                    var newTabName = ++this.tabIndex + '';
+                    this.editableTabs.push({
+                        title: 'New Tab',
+                        name: newTabName,
+                        content: 'New Tab content'
+                    });
+                    this.editableTabsValue = newTabName;
+                }
+            },
+            openMenu:function () {
+                this.visible = true
+                this.selectedTag = tag
+                const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+                this.left = e.clientX - offsetLeft + 15 // 15: margin right
+                this.top = e.clientY
+            },
+            closeMenu:function() {
+                this.visible = false
             }
         }
     })
